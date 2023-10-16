@@ -1,8 +1,339 @@
+@mixin fontstyles($fontWeight, $fontColor, $fontSize, $lineHeight, $textAlign) {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: $fontColor;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: $fontWeight;
+  font-size: $fontSize;
+  line-height: $lineHeight;
+  letter-spacing: 0;
+  opacity: 1;
+  text-align: $textAlign;
+}
+
 .nonMemberDdCallout {
   .ms-FocusZone {
     .ms-Dropdown-item:hover {
       color: #000000;
       background-color: #f6f5f4 !important;
+    }
+  }
+}
+
+.clb-dashboard-popup {
+  .ms-Dialog-main {
+    width: 75%;
+    max-width: none;
+    min-width: unset;
+    height: 470px;
+    background-color: #FFFFFF;
+
+    .clb-dialog-content {
+      .ms-Dialog-header {
+        .ms-Dialog-title {
+          min-height: 0px;
+          @include fontstyles(600, #242424, 22px, 30px, left);
+        }
+
+        .ms-Button--icon {
+          .ms-Icon {
+            color: #242424;
+            font-weight: 600;
+          }
+
+          &:hover {
+            background-color: rgb(245, 245, 245);
+
+            .ms-Icon {
+              color: #242424;
+            }
+          }
+        }
+      }
+
+      .ms-Dialog-inner {
+        padding: 0px 24px 5px !important;
+
+        .showActivitiesPopupBody {
+          .showActivities-grid-area {
+            .activities-grid-heading {
+              margin-bottom: 10px;
+              @include fontstyles(600, #242424, 14px, 19px, left);
+            }
+
+            .events-table-wrapper-class {
+              height: 321px;
+              margin-bottom: 10px;
+
+
+              span[class="sort-order"] {
+                vertical-align: middle;
+                position: relative;
+                margin: 10px 3.5px;
+              }
+
+              span[class="dropdown-caret"] {
+                margin: 10px 0 10px 5px;
+                color: #000000;
+                display: inline-block;
+                margin-left: 2px;
+                border-top: 4px dashed;
+                border-right: 4px solid transparent;
+                border-left: 4px solid transparent;
+                position: relative;
+              }
+
+              span[class="dropup-caret"] {
+                color: #000000;
+                margin: 10px 0;
+                display: inline-block;
+                margin-left: 2px;
+                border-bottom: 4px dashed;
+                border-top: 0;
+                border-right: 4px solid transparent;
+                border-left: 4px solid transparent;
+                position: relative;
+              }
+
+              table {
+                thead {
+                  tr {
+                    th {
+                      @include fontstyles(600, #242424, 14px, 19px, left);
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                    }
+
+                    th:nth-child(1) {
+                      width: 38%;
+                    }
+
+                    th:nth-child(2) {
+                      width: 37%;
+                    }
+                  }
+                }
+
+                tbody {
+                  tr {
+                    td {
+                      @include fontstyles(normal, #212121, 14px, 19px, left);
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      white-space: normal;
+                      padding: 0.5rem;
+
+                      .activities-noRecordsFound {
+                        text-align: center;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            .pagination-area {
+              @include fontstyles(normal, #212121, 12px, 16px, center);
+              margin-bottom: 10px;
+
+              .Chevron-Icon {
+                cursor: pointer;
+                font-size: 12px;
+                margin-left: 20px;
+                font-weight: 700;
+                color: #000;
+
+                &:hover {
+                  color: #464775;
+                }
+              }
+
+            }
+
+            @media screen and (min-width:653px) and (max-width: 991px) {
+              .events-table-wrapper-class {
+                height: auto;
+              }
+            }
+          }
+        }
+
+        .dashboard-chart-wrapper {
+          padding: 0;
+          box-shadow: none;
+          border-radius: 0;
+          margin-bottom: 0px;
+
+          .dashboard-chart-heading {
+            margin-bottom: 10px;
+            @include fontstyles(600, #242424, 14px, 19px, left);
+          }
+
+          .sidebar-chart {
+            background-color: #fff;
+
+            canvas {
+              background-color: #ffffff;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.clb-dashboard-popup-dark {
+  .ms-Dialog-main {
+    background-color: #292929;
+
+    .clb-dialog-content {
+      .ms-Dialog-header {
+        .ms-Dialog-title {
+          color: #FFF;
+        }
+
+        .ms-Button--icon {
+          .ms-Icon {
+            color: #FFF;
+          }
+
+          &:hover {
+            background-color: rgb(245, 245, 245);
+
+            .ms-Icon {
+              color: #000;
+            }
+          }
+        }
+      }
+
+      .ms-Dialog-inner {
+        .showActivitiesPopupBody {
+          .showActivities-grid-area {
+            .activities-grid-heading {
+              color: #FFF;
+            }
+
+            .events-table-wrapper-class {
+              table {
+                tbody {
+                  tr {
+                    td {
+                      color: #FFF
+                    }
+                  }
+                }
+              }
+            }
+
+            .pagination-area {
+              color: #FFF;
+
+              .Chevron-Icon {
+                color: #FFF;
+
+                &:hover {
+                  color: #FFF;
+                }
+              }
+
+            }
+          }
+        }
+
+        .dashboard-chart-wrapper {
+          .dashboard-chart-heading {
+            color: #FFF;
+          }
+
+          .sidebar-chart {
+            background-color: #000;
+
+            canvas {
+              background-color: #000;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.clb-dashboard-popup-contrast {
+  .ms-Dialog-main {
+    background-color: #000;
+    border: 1px solid #ffffff;
+
+    .clb-dialog-content {
+      .ms-Dialog-header {
+        .ms-Dialog-title {
+          color: #FFF;
+        }
+
+        .ms-Button--icon {
+          .ms-Icon {
+            color: #FFF;
+          }
+
+          &:hover {
+            background-color: rgb(245, 245, 245);
+
+            .ms-Icon {
+              color: #000;
+            }
+          }
+        }
+      }
+
+      .ms-Dialog-inner {
+        .showActivitiesPopupBody {
+          .showActivities-grid-area {
+            .activities-grid-heading {
+              color: #FFF;
+            }
+
+            .events-table-wrapper-class {
+              table {
+                tbody {
+                  tr {
+                    td {
+                      color: #FFF
+                    }
+                  }
+                }
+              }
+            }
+
+            .pagination-area {
+              color: #FFF;
+
+              .Chevron-Icon {
+                color: #FFF;
+
+                &:hover {
+                  color: #FFF;
+                }
+              }
+
+            }
+          }
+        }
+
+        .dashboard-chart-wrapper {
+          .dashboard-chart-heading {
+            color: #FFF;
+          }
+
+          .sidebar-chart {
+            background-color: #292929;
+
+            canvas {
+              background-color: #292929;
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -18,37 +349,47 @@
     height: auto;
     opacity: 1;
 
-    .profilepic {
-      height: 100px;
-      width: 100px;
-      border-radius: 50%;
-      margin-top: 5rem;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      border-radius: 50%;
-      background-color: #7577b9;
-      border: 4px solid #464775;
-      box-shadow: 0 0 0 3px #fff;
+    .imagePointsArea {
+      margin-top: 2rem;
     }
 
-    .championname {
-      font-size: 16px;
-      font: normal normal bold 18px/24px Segoe UI;
-      font-weight: 600;
-      color: white;
-      margin-top: 0.5rem;
-      text-align: center;
+    .links-wrapper {
+      display: grid;
+      justify-content: center;
+      row-gap: 8px;
+      margin-top: 12px;
+
+      .sidebar-action-link {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        cursor: pointer;
+        padding: 2px;
+        width: 135px;
+        border-radius: 4px;
+
+        .action-img {
+          width: 30px;
+          height: 30px;
+        }
+
+        .action-text {
+          text-align: left;
+          font: normal normal normal 16px/18px Segoe UI;
+          letter-spacing: 0px;
+          color: #FFFFFF;
+          opacity: 1;
+        }
+      }
     }
 
     .pointcircle {
       border-radius: 50%;
       background-color: #6f71af;
-      border: 4px solid #464775;
-      box-shadow: 0 0 0 3px #fff;
+      border: 4px solid #6f71af;
       background: #6f71af 0% 0% no-repeat padding-box;
-      width: 153px;
-      height: 154px;
+      width: 158px;
+      height: 159px;
       border-radius: 102px;
       margin-top: 2.2rem;
       display: block;
@@ -86,7 +427,6 @@
           }
         }
       }
-
     }
 
     .bc-btn,
@@ -106,7 +446,6 @@
     .bc-form-main-area {
       display: unset;
     }
-
 
     .bc-form {
       margin: 1rem;
@@ -166,6 +505,13 @@
         font: normal normal bold 14px/24px Segoe UI;
       }
 
+      .backLabel:focus-visible {
+        box-shadow: none;
+        outline: 2px solid #414156 !important;
+        border-radius: 1px;
+        outline-offset: 4px;
+      }
+
       .ClbBorder {
         width: 0px;
         height: 14px;
@@ -179,10 +525,48 @@
       }
     }
 
+    .ClbPathDarkContrast {
+      color: var(--colorNeutralForeground1);
+
+      .backImg {
+        filter: brightness(0) saturate(100%) invert(86%) sepia(100%) saturate(3%) hue-rotate(190deg) brightness(109%) contrast(97%);
+      }
+
+      .backLabel {
+        color: var(--colorBrandForegroundLink);
+      }
+
+      .backLabel:focus-visible {
+        outline-color: var(--colorPaletteBlueBorderActive);
+      }
+
+      .ClbBorder {
+        border-color: var(--colorNeutralForeground1);
+      }
+    }
+
+    .events-success-message {
+      font: normal normal normal 16px/21px Segoe UI;
+      text-align: left;
+      padding: 0;
+      color: #000000;
+
+      .tickImage {
+        width: 28px;
+        height: 28px;
+        margin-right: 10px;
+        margin-bottom: 5px;
+        opacity: 1;
+      }
+    }
+
+    .events-success-messageDarkContrast {
+      color: var(--colorPaletteGreenForeground1);
+    }
+
     .paddingTop {
       padding-top: 4%;
     }
-
 
     .table-content {
       margin: 1rem 0rem;
@@ -212,11 +596,8 @@
       }
 
       .gttc-img {
-        height: 31px;
-        width: 31px;
-        border-radius: 50%;
-        display: inline;
         margin: 5px;
+        width: fit-content;
       }
 
       .gttc-img-name {
@@ -235,6 +616,10 @@
         vertical-align: middle;
         width: 75px;
         text-overflow: ellipsis;
+
+        #points2 {
+          color: #f3ca3e;
+        }
 
         #count2 {
           color: #f3ca3e;
@@ -302,6 +687,18 @@
 
       .gttc-tap-data {
         text-align: center;
+      }
+    }
+
+    .topChampCards--DarkContrast {
+      background-color: var(--colorNeutralBackground1);
+
+      .accordion-collapse--DarkContrast {
+        background-color: var(--colorNeutralBackground1);
+
+        td {
+          background-color: #fff;
+        }
       }
     }
 
@@ -389,6 +786,19 @@
   }
 }
 
+.championSideBar {
+  --person-line1-font-size: 18px;
+  --person-line1-font-weight: 600;
+  --person-line1-text-color: var(--colorNeutralForegroundStaticInverted) !important;
+  --person-line1-text-transform: capitalize;
+  --person-line1-text-line-height: 24px;
+}
+
+.accordion-person-card {
+  --person-line1-text-line-height: 32px;
+  --person-avatar-size: 31px;
+}
+
 @media screen and (max-width: 767px) {
   .Championleaderboard {
     .content-tab {
@@ -408,28 +818,36 @@
 
     .sidenav {
       background: transparent url("../assets/TOTImages/SidebarMobile.svg") 0% 0% no-repeat padding-box;
-      height: 140px;
+      max-height: 200px;
       background-color: #464775;
       min-width: 100%;
       background-repeat: no-repeat;
       background-size: cover;
       background-position: 50%;
-      min-height: unset;
+      min-height: 140px;
 
       .imagePointsArea {
         display: flex;
         justify-content: space-around;
+        align-items: center;
+        margin-top: 0;
       }
 
-      .profilepic {
-        height: 70px;
-        width: 70px;
-        margin-top: 2rem;
+      .links-wrapper {
+        .sidebar-action-link {
+          width: fit-content;
+
+          .action-img {
+            width: 25px;
+            height: 25px;
+          }
+
+          .action-text {
+            font-size: 14px;
+          }
+        }
       }
 
-      .championname {
-        font: normal normal 700 14px/24px Segoe UI;
-      }
 
       .pointcircle {
         width: 120px;
@@ -493,9 +911,59 @@
           padding-right: 7px;
         }
 
+        .backLabel:focus-visible {
+          box-shadow: none;
+          outline: 2px solid #414156 !important;
+          border-radius: 1px;
+          outline-offset: 4px;
+        }
+
         .ClbLabel {
           font: normal normal 700 14px/23px Segoe UI;
           padding-left: 7px;
+        }
+      }
+    }
+  }
+
+  .clb-dashboard-popup {
+    .ms-Dialog-main {
+      height: 90%;
+      width: 90%;
+
+      .clb-dialog-content {
+        .ms-Dialog-inner {
+          .showActivitiesPopupBody {
+            .showActivities-grid-area {
+              table {
+                thead {
+                  tr {
+                    th {
+                      overflow: visible;
+                      text-overflow: unset;
+                      white-space: unset;
+                      font: normal normal 600 12px/19px Segoe UI;
+                    }
+                  }
+                }
+
+                tbody {
+                  tr {
+                    td {
+                      overflow: visible;
+                      text-overflow: unset;
+                      white-space: unset;
+                      font: normal normal normal 12px/19px Segoe UI;
+                    }
+                  }
+                }
+              }
+
+              .pagination-area {
+                padding-bottom: 20px;
+              }
+            }
+          }
         }
       }
     }

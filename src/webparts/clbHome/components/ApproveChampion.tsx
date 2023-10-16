@@ -11,6 +11,7 @@ import commonServices from '../Common/CommonServices';
 import * as stringConstants from "../constants/strings";
 import styles from "../scss/ManageApprovals.module.scss";
 import { IConfigList } from './ManageConfigSettings';
+import { Person } from "@microsoft/mgt-react/dist/es6/spfx";
 
 let commonServiceManager: commonServices;
 
@@ -312,7 +313,15 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
     nextPageText: '>',
     prePageText: '<',
     showTotal: true,
-    alwaysShowAllBtns: false
+    alwaysShowAllBtns: false,
+    paginationTotalRenderer: (from: any, to: any, size: any) => {
+      const resultsFound = size !== 0 ? `Showing ${from} to ${to} of ${size} Results` : ""
+      return (
+        <span className="react-bootstrap-table-pagination-total" aria-live="polite" role="alert">
+          &nbsp;{resultsFound}
+        </span>
+      )
+    }
   });
 
   //Get Table Header Class
@@ -339,6 +348,47 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
       return styles.championsApprovalTableBodyWithFourCols;
   }
 
+  //render the sort caret on the header column for accessbility
+  customSortCaret = (order: any, column: any) => {
+    if (!order) {
+      return (
+        <span className="sort-order">
+          <span className="dropdown-caret">
+          </span>
+          <span className="dropup-caret">
+          </span>
+        </span>);
+    }
+    else if (order === 'asc') {
+      return (
+        <span className="sort-order">
+          <span className="dropup-caret">
+          </span>
+        </span>);
+    }
+    else if (order === 'desc') {
+      return (
+        <span className="sort-order">
+          <span className="dropdown-caret">
+          </span>
+        </span>);
+    }
+    return null;
+  }
+
+
+  // format the cell for Champion Name
+  championFormatter = (cell: any, gridRow: any, rowIndex: any, formatExtraData: any) => {
+    return (
+      <Person
+        personQuery={gridRow.Title}
+        view={3}
+        personCardInteraction={1}
+        className='champion-person-card'
+      />
+    );
+  }
+
   public render() {
     //storing number of dropdowns got enabled
     const enabledColumnCount = (this.state.countryColumnName !== "" ? 1 : 0) +
@@ -346,7 +396,6 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
     const championsTableHeader = [
       {
         dataField: "ID",
-        headerTitle: () => LocaleStrings.SelectAllChampions,
         headerFormatter: () => {
           return (
             <Checkbox
@@ -380,24 +429,22 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
       {
         dataField: "FirstName",
         text: LocaleStrings.PeopleNameGridHeader,
-        headerTitle: LocaleStrings.PeopleNameGridHeader,
-        title: (_cell: any, row: any) => row.FirstName + " " + row.LastName,
-        formatter: (_cell: any, row: any) => <>{row.FirstName} {row.LastName}</>,
+        formatter: this.championFormatter,
         searchable: true,
-        sort: true
+        sort: true,
+        sortCaret: this.customSortCaret
       },
       {
         dataField: "Title",
         text: LocaleStrings.EmailLabel,
-        headerTitle: LocaleStrings.EmailLabel,
         title: true,
         searchable: true,
-        sort: true
+        sort: true,
+        sortCaret: this.customSortCaret
       },
       {
         dataField: "Region",
         text: this.state.regionColumnName,
-        headerTitle: this.state.regionColumnName,
         title: true,
         searchable: false,
         hidden: this.state.regionColumnName === ""
@@ -405,7 +452,6 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
       {
         dataField: "Country",
         text: this.state.countryColumnName,
-        headerTitle: this.state.countryColumnName,
         title: true,
         searchable: false,
         hidden: this.state.countryColumnName === ""
@@ -413,7 +459,6 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
       {
         dataField: "Group",
         text: this.state.groupColumnName,
-        headerTitle: this.state.groupColumnName,
         title: true,
         searchable: false,
         hidden: this.state.groupColumnName === ""
@@ -421,7 +466,6 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
       {
         dataField: "FocusArea",
         text: LocaleStrings.FocusAreaGridHeader,
-        headerTitle: LocaleStrings.FocusAreaGridHeader,
         title: true,
         searchable: false
       }
@@ -429,7 +473,7 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
     return (
       <div className={styles.approvalsContainer}>
         {this.state.approveMessage &&
-          <Label className={styles.approveMessage + ' col-xl-5 col-lg-5 col-md-6 col-sm-8 col-xs-9'}>
+          <Label className={styles.approveMessage + ' col-xl-5 col-lg-5 col-md-6 col-sm-8 col-xs-9'} aria-live="polite" role="alert">
             <img
               src={require('../assets/TOTImages/tickIcon.png')}
               alt={LocaleStrings.SuccessIcon}
@@ -439,7 +483,7 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
           </Label>
         }
         {this.state.rejectMessage &&
-          <Label className={styles.rejectMessage + ' col-xl-5 col-lg-5 col-md-6 col-sm-8 col-xs-9'}>
+          <Label className={styles.rejectMessage + ' col-xl-5 col-lg-5 col-md-6 col-sm-8 col-xs-9'} aria-live="polite" role="alert">
             {this.state.rejectMessage}
           </Label>
         }
@@ -483,7 +527,7 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
                     striped
                     {...props.baseProps}
                     table-responsive={true}
-                    pagination={(this.state.filteredChampionList.length > 0 && this.state.filteredChampionList.length > 10) && this.pagination}
+                    pagination={this.pagination}
                     wrapperClasses={styles.approvalsTableWrapper}
                     headerClasses={this.getTableHeaderClass(enabledColumnCount)}
                     bodyClasses={this.getTableBodyClass(enabledColumnCount)}
@@ -499,8 +543,9 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
                               src={require('../assets/CMPImages/Norecordsicon.svg')}
                               alt={LocaleStrings.NoRecordsIcon}
                               className={styles.noRecordsImg}
+                              aria-hidden={true}
                             />
-                            <span className={styles.noRecordsLabels}>
+                            <span className={styles.noRecordsLabels} aria-live='polite' role="alert" tabIndex={0}>
                               {this.state.championList.length === 0 ?
                                 LocaleStrings.NoChampionsMessage
                                 :

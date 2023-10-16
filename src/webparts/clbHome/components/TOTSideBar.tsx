@@ -9,6 +9,7 @@ import { RxJsEventEmitter } from "../events/RxJsEventEmitter";
 import { EventData } from "../events/EventData";
 import sideBarStyles from "../scss/TOTSideBar.module.scss";
 import * as LocaleStrings from 'ClbHomeWebPartStrings';
+import { Person } from "@microsoft/mgt-react/dist/es6/spfx";
 
 initializeIcons();
 
@@ -31,6 +32,7 @@ interface ITOTSideBarState {
   userDisplayName: string;
   userEmail: string;
   allUserProps: any;
+  isDesktop: boolean;
 }
 export default class TOTSideBar extends React.Component<
   ITOTSideBarProps,
@@ -52,6 +54,7 @@ export default class TOTSideBar extends React.Component<
       userDisplayName: "",
       userEmail: "",
       allUserProps: [],
+      isDesktop: true
     };
     //Create object for commonServices class
     commonService = new commonServices(this.props.context, this.props.siteUrl);
@@ -69,8 +72,9 @@ export default class TOTSideBar extends React.Component<
     if (
       this.props.currentUserDetails == undefined ||
       this.props.currentUserDetails.length == 0
-    )
+    ) {
       this.getCurrentUserDetails();
+    }
     else {
       let filterCurrentUser = this.props.currentUserDetails.filter(
         (e) =>
@@ -95,6 +99,41 @@ export default class TOTSideBar extends React.Component<
           isShowLoader: false,
         });
       }
+    }
+
+    // Adding window resize event listener while mounting the component
+    window.addEventListener("resize", this.resize.bind(this));
+    this.resize();
+    //set css properties to Person card control
+    this.updatePersonCardCSS();
+  }
+
+  // Set the state object for screen size
+  resize = () => this.setState({ isDesktop: window.innerWidth > 568 });
+
+  //set css properties to Person card control
+  public updatePersonCardCSS() {
+    setTimeout(() => {
+      const sidebarPersonWrapper = document.getElementById("tot-sidebar-person-wrapper")?.querySelector("mgt-person")
+        ?.shadowRoot?.querySelector("mgt-flyout")?.querySelector(".vertical");
+      sidebarPersonWrapper?.setAttribute("style", "row-gap:10px;");
+      if (this.state.isDesktop) {
+        sidebarPersonWrapper?.querySelector(".avatar-wrapper")?.setAttribute("style", "width: 100px; height: 100px;");
+        sidebarPersonWrapper?.querySelector(".details-wrapper")?.querySelector(".line1")?.setAttribute("style",
+          "width: 180px;overflow-wrap: break-word;text-align: center;");
+      }
+      else {
+        sidebarPersonWrapper?.querySelector(".avatar-wrapper")?.setAttribute("style", "");
+        sidebarPersonWrapper?.querySelector(".details-wrapper")?.querySelector(".line1")
+          ?.setAttribute("style", "font-size:14px;width: 140px;overflow-wrap: break-word;text-align: center;");
+      }
+    }, 5000);
+  }
+
+  public componentDidUpdate(prevProps: Readonly<ITOTSideBarProps>, prevState: Readonly<ITOTSideBarState>) {
+    if (prevState.isDesktop !== this.state.isDesktop) {
+      //set css properties to Person card control
+      this.updatePersonCardCSS();
     }
   }
 
@@ -189,21 +228,14 @@ export default class TOTSideBar extends React.Component<
             this.state.userEmail != undefined &&
             this.state.userEmail != "" && (
               <div className={sideBarStyles.imagePointsArea}>
-                <div>
-                  {/* user profile image*/}
-                  <img
-                    src={
-                      "/_layouts/15/userphoto.aspx?username=" +
-                      this.state.userEmail
-                    }
-                    className={sideBarStyles.profilePic}
-                    onError={this.addDefaultSrc}
-                    title={this.state.userDisplayName}
+                <div id="tot-sidebar-person-wrapper">
+                  <Person
+                    personQuery="me"
+                    view={3}
+                    personCardInteraction={1}
+                    verticalLayout={true}
+                    className={sideBarStyles.profileImageSideBar}
                   />
-                  {/* username */}
-                  <div className={sideBarStyles.championName}>
-                    {this.state.userDisplayName}
-                  </div>
                 </div>
                 <div>
                   {/* here we are showing rank and points  */}

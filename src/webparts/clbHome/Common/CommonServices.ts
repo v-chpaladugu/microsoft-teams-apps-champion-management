@@ -215,6 +215,19 @@ export default class CommonServices {
     });
   }
 
+  //Create SharePoint Site List
+  public async createSPlist(listName: string) {
+    try {
+      const listResponse = await sp.web.lists.add(listName);
+      console.log("Created list successfully. ", listName);
+      return listResponse;
+    }
+    catch (error: any) {
+      console.log("Error in creating list. ", error);
+      return error;
+    }
+  }
+
   //create fields in SP lists
   public async createListFields(listname: string, fieldsToCreate: any): Promise<any> {
     return new Promise<any>(async (resolve, reject) => {
@@ -519,7 +532,7 @@ export default class CommonServices {
     let totalPoints = 0;
 
     await this.getFilteredListItemsWithSpecificColumns(stringsConstants.MemberList, "ID", filterQuery)
-      .then(async (memberID) => {    
+      .then(async (memberID) => {
         //If current user is not a member skip the points calculation    
         if (memberID.length != 0) {
           let filter = "MemberId eq '" + memberID[0].ID + "'" + " and Status ne 'Pending' and Status ne 'Rejected'";

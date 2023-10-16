@@ -1,4 +1,4 @@
-# Installation Types (Customized vs Standard)
+# Installation Types (Standard vs Customized)
 
 ## Standard Installation
 The standard installation assumes you would like to take the SharePoint package file located in our GitHub repository and install using the configuration outlined in this readme file (assets all created under a SharePoint site
