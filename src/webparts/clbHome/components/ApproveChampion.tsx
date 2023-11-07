@@ -409,6 +409,7 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
             />
           );
         },
+        headerTitle: () => LocaleStrings.SelectAllChampions,
         title: () => LocaleStrings.SelectChampion,
         attrs: (_cell: any, row: any) => ({ key: row.ID }),
         formatter: (_: any, gridRow: any) => {
@@ -429,6 +430,7 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
       {
         dataField: "FirstName",
         text: LocaleStrings.PeopleNameGridHeader,
+        headerTitle: true,
         formatter: this.championFormatter,
         searchable: true,
         sort: true,
@@ -437,6 +439,7 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
       {
         dataField: "Title",
         text: LocaleStrings.EmailLabel,
+        headerTitle: true,
         title: true,
         searchable: true,
         sort: true,
@@ -445,6 +448,7 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
       {
         dataField: "Region",
         text: this.state.regionColumnName,
+        headerTitle: true,
         title: true,
         searchable: false,
         hidden: this.state.regionColumnName === ""
@@ -452,6 +456,7 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
       {
         dataField: "Country",
         text: this.state.countryColumnName,
+        headerTitle: true,
         title: true,
         searchable: false,
         hidden: this.state.countryColumnName === ""
@@ -459,6 +464,7 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
       {
         dataField: "Group",
         text: this.state.groupColumnName,
+        headerTitle: true,
         title: true,
         searchable: false,
         hidden: this.state.groupColumnName === ""
@@ -466,6 +472,7 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
       {
         dataField: "FocusArea",
         text: LocaleStrings.FocusAreaGridHeader,
+        headerTitle: true,
         title: true,
         searchable: false
       }

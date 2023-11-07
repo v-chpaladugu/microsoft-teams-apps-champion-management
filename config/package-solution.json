@@ -21,7 +21,7 @@
       },
       {
         "resource": "Microsoft Graph",
-        "scope": "User.ReadBasic.All"
+        "scope": "User.Read.All"
       },
       {
         "resource": "Microsoft Graph",

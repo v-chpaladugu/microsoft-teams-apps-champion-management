@@ -312,6 +312,7 @@ export default class ChampionsActivities extends Component<ChampionsActivitiesPr
                         />
                     );
                 },
+                headerTitle: () => LocaleStrings.SelectAllEvents,
                 title: () => LocaleStrings.SelectEvent,
                 attrs: (_cell: any, row: any) => ({ key: row.EventActivityId }),
                 formatter: (_: any, gridRow: any) => {
@@ -331,7 +332,8 @@ export default class ChampionsActivities extends Component<ChampionsActivitiesPr
             },
             {
                 dataField: "Champion",
-                text: LocaleStrings.ChampionLabel,               
+                text: LocaleStrings.ChampionLabel,
+                headerTitle: true,
                 searchable: true,
                 sort: true,
                 sortCaret: this.customSortCaret,
@@ -340,6 +342,7 @@ export default class ChampionsActivities extends Component<ChampionsActivitiesPr
             {
                 dataField: "Email",
                 text: LocaleStrings.EmailLabel,
+                headerTitle: true,
                 title: true,
                 searchable: true,
                 sort: true,
@@ -348,12 +351,14 @@ export default class ChampionsActivities extends Component<ChampionsActivitiesPr
             {
                 dataField: "Event",
                 text: LocaleStrings.EventLabel,
+                headerTitle: true,
                 title: true,
                 searchable: true
             },
             {
                 dataField: "Date",
                 text: LocaleStrings.DateLabel,
+                headerTitle: true,
                 title: (_cell: any, row: any) => row.Date.toDateString().slice(4),
                 searchable: false,
                 sort: true,
@@ -363,12 +368,14 @@ export default class ChampionsActivities extends Component<ChampionsActivitiesPr
             {
                 dataField: "Points",
                 text: LocaleStrings.PointsLabel,
+                headerTitle: true,
                 title: true,
                 searchable: false
             },
             {
                 dataField: "Notes",
                 text: LocaleStrings.NotesLabel,
+                headerTitle: true,
                 title: true,
                 searchable: false
             }
