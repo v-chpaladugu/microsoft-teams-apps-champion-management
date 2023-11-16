@@ -172,8 +172,8 @@ export default class Sidebar extends React.Component<ISidebarStateProps, IState>
   }
 
   public optionsEventsList() {
-    let optionArray = [];
-    let optionArrayIds = [];
+    let optionArray: any = [];
+    let optionArrayIds: any = [];
     if (this.state.edetails.length == 0)
       this.props.context.spHttpClient
         .get("/" + this.state.inclusionpath + "/" + this.state.sitename + "/_api/web/lists/GetByTitle('Events List')/Items", SPHttpClient.configurations.v1)
@@ -216,7 +216,7 @@ export default class Sidebar extends React.Component<ISidebarStateProps, IState>
   };
 
   public handleInput(event: any, key: string) {
-    let user = this.state.currentUser;
+    let user: any = this.state.currentUser;
     user[key] = event.target.value;
     this.setState({ currentUser: user });
   }
@@ -234,7 +234,7 @@ export default class Sidebar extends React.Component<ISidebarStateProps, IState>
         SPHttpClient.configurations.v1
       )
       .then((response: SPHttpClientResponse) => {
-        response.json().then((regions) => {
+        response.json().then((regions: any) => {
           if (!regions.error) {
             this.props.context.spHttpClient
               .get(
@@ -247,7 +247,7 @@ export default class Sidebar extends React.Component<ISidebarStateProps, IState>
               )
               // tslint:disable-next-line:no-shadowed-variable
               .then((response: SPHttpClientResponse) => {
-                response.json().then((countries) => {
+                response.json().then((countries: any) => {
                   if (!countries.error) {
                     this.setState({
                       regions: regions.Choices,
@@ -270,7 +270,7 @@ export default class Sidebar extends React.Component<ISidebarStateProps, IState>
         SPHttpClient.configurations.v1
       )
       .then((response: SPHttpClientResponse) => {
-        response.json().then((roles) => {
+        response.json().then((roles: any) => {
           if (!roles.error) {
             this.props.context.spHttpClient
               .get(
@@ -283,7 +283,7 @@ export default class Sidebar extends React.Component<ISidebarStateProps, IState>
               )
               // tslint:disable-next-line: no-shadowed-variable
               .then((response: SPHttpClientResponse) => {
-                response.json().then((status) => {
+                response.json().then((status: any) => {
                   if (!status.error) {
                     this.setState({
                       roles: roles.Choices,
@@ -393,7 +393,7 @@ export default class Sidebar extends React.Component<ISidebarStateProps, IState>
                 SPHttpClient.configurations.v1
               )
               .then((response: SPHttpClientResponse) => {
-                response.json().then((datada) => {
+                response.json().then((datada: any) => {
                   let memberDataIds = datada.value.find(
                     (d: { Title: string }) =>
                       d.Title.toLowerCase() === datauser.Email.toLowerCase()
@@ -449,7 +449,7 @@ export default class Sidebar extends React.Component<ISidebarStateProps, IState>
                   this.setState({ currentUser: user });
                   if (!datada.error) {
                     let totalchamps: number = 0;
-                    totalchamps = datada.value.filter((x) =>
+                    totalchamps = datada.value.filter((x: any) =>
                       (x.Role.toLowerCase() === "champion" ||
                         x.Role.toLowerCase() === "manager") &&
                         x.Status !== null &&
@@ -475,7 +475,7 @@ export default class Sidebar extends React.Component<ISidebarStateProps, IState>
                         .then((responseeventsdetails: SPHttpClientResponse) => {
                           responseeventsdetails
                             .json()
-                            .then((eventsdatauser) => {
+                            .then((eventsdatauser: any) => {
                               this.setState({
                                 memberEvents: eventsdatauser.value
                               });
@@ -706,7 +706,7 @@ export default class Sidebar extends React.Component<ISidebarStateProps, IState>
       });
   }
 
-  public addDefaultSrc(ev) {
+  public addDefaultSrc(ev: any) {
     ev.target.src = require("../assets/images/noprofile.png"); //if no profile then we are showing default image
   }
 
@@ -756,7 +756,7 @@ export default class Sidebar extends React.Component<ISidebarStateProps, IState>
     } //When an option unselected from the dropdown other than "All"
     else {
       this.setState({
-        multiSelectChoices: this.state.multiSelectChoices.filter((key) => key !== item.key && key !== stringsConstants.AllLabel)
+        multiSelectChoices: this.state.multiSelectChoices.filter((key: any) => key !== item.key && key !== stringsConstants.AllLabel)
       });
     }
   }

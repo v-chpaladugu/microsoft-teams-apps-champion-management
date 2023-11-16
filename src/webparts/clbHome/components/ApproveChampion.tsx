@@ -249,7 +249,7 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
     //When "Select All" is checked
     if (selectAll && isChecked) {
       this.setState({ isAllSelected: true });
-      let selectedChampions = [];
+      let selectedChampions: any = [];
       this.state.filteredChampionList.forEach((event: ISPList) => {
         selectedChampions.push(event.ID);
       });
@@ -393,7 +393,7 @@ class ApproveChampion extends React.Component<IClbChampionsListProps, IState> {
     //storing number of dropdowns got enabled
     const enabledColumnCount = (this.state.countryColumnName !== "" ? 1 : 0) +
       (this.state.regionColumnName !== "" ? 1 : 0) + (this.state.groupColumnName !== "" ? 1 : 0);
-    const championsTableHeader = [
+    const championsTableHeader: any = [
       {
         dataField: "ID",
         headerFormatter: () => {

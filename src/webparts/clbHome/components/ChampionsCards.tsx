@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
-import * as microsoftTeams from '@microsoft/teams-js';
+import { app } from '@microsoft/teams-js-v2';
 import { Component } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
@@ -95,13 +95,13 @@ export default class ChampionsCards extends Component<ChampionsCardsProps, Champ
 
   //Initializes the teams library and calling the methods to load the initial data  
   public _renderListAsync() {
-    microsoftTeams.initialize();
+    app.initialize();
     this.getMemberDetails();
     this.getChoicesFromList();
   }
 
   // Handle accordion toggle on tab - accessibility
-  private handleAccordionToggle = (event, key) => {
+  private handleAccordionToggle = (event: any, key: any) => {
     if (event.key === constants.stringEnter) {
       event.preventDefault();
       document.getElementById(`accordion-toggle-${key}`).click();
@@ -132,7 +132,7 @@ export default class ChampionsCards extends Component<ChampionsCardsProps, Champ
         let refLength: number;
         if (this.state.selectedFocusArea != constants.AllLabel && this.state.search == "") {
           //Filter the users based on the selected Focus Area and Searched value
-          const filteredUsers = this.state.users.filter((user) => user.FocusArea?.toString().includes(this.state.selectedFocusArea));
+          const filteredUsers = this.state.users.filter((user: any) => user.FocusArea?.toString().includes(this.state.selectedFocusArea));
           refLength = filteredUsers.length > this.state.loadCards ? this.state.loadCards : filteredUsers.length;
           //Set the filteredUsers array and cardPersonRefs array
           this.setState({
@@ -150,7 +150,7 @@ export default class ChampionsCards extends Component<ChampionsCardsProps, Champ
         }
         else if (this.state.selectedFocusArea != constants.AllLabel && this.state.search != "") {
           //Filter the users based on the selected Focus Area and Searched value
-          const filteredUsers = this.state.users.filter((user) =>
+          const filteredUsers = this.state.users.filter((user: any) =>
             user.FocusArea?.toString().includes(this.state.selectedFocusArea) &&
             ((user.FirstName &&
               user.FirstName.toLowerCase().includes(this.state.search.toLowerCase())) ||
@@ -172,7 +172,7 @@ export default class ChampionsCards extends Component<ChampionsCardsProps, Champ
         }
         else if (this.state.selectedFocusArea == constants.AllLabel && this.state.search != "") {
           //Filter the users based on the selected Focus Area and Searched value
-          const filteredUsers = this.state.users.filter((user) =>
+          const filteredUsers = this.state.users.filter((user: any) =>
           ((user.FirstName &&
             user.FirstName.toLowerCase().includes(this.state.search.toLowerCase())) ||
             (user.LastName &&
@@ -290,10 +290,10 @@ export default class ChampionsCards extends Component<ChampionsCardsProps, Champ
                   events: activeEvents
                 });
                 for (let i = 0; i < approvedMembers.length; i++) {
-                  filteredMember = eventTrackArray.filter(user => user.MemberId === approvedMembers[i].ID);
+                  filteredMember = eventTrackArray.filter((user: any) => user.MemberId === approvedMembers[i].ID);
                   let eventpoints = _.groupBy(_.orderBy(filteredMember, ['Id'], ['asc']), "EventId");
 
-                  let pointsCompleted: number = filteredMember.reduce((previousValue, currentValue) => { return previousValue + currentValue["Count"]; }, 0);
+                  let pointsCompleted: number = filteredMember.reduce((previousValue: any, currentValue: any) => { return previousValue + currentValue["Count"]; }, 0);
                   championsListArray.push({
                     Points: pointsCompleted,
                     EventPoints: eventpoints,
@@ -310,13 +310,13 @@ export default class ChampionsCards extends Component<ChampionsCardsProps, Champ
                   });
                 }
                 //Sort by points                
-                championsListArray.sort((a, b) => {
+                championsListArray.sort((a: any, b: any) => {
                   if (a.Points < b.Points) return 1;
                   if (a.Points > b.Points) return -1;
                 });
 
                 //Update ranks for the members
-                championsListArray = championsListArray.map((currentValue, index) => {
+                championsListArray = championsListArray.map((currentValue: any, index: any) => {
                   currentValue.Rank = index + 1;
                   return currentValue;
                 });
@@ -375,8 +375,8 @@ export default class ChampionsCards extends Component<ChampionsCardsProps, Champ
 
   //Method to execute the deep link API in teams
   public openTask = (selectedTask: string) => {
-    microsoftTeams.initialize();
-    microsoftTeams.executeDeepLink(selectedTask);
+    app.initialize();
+    app.openLink(selectedTask);
   }
 
   //Default image to show in case of any error in loading user profile image
@@ -657,7 +657,7 @@ export default class ChampionsCards extends Component<ChampionsCardsProps, Champ
                                   as={Card.Header}
                                   eventKey={rankedMember.ID}
                                   tabIndex={0}
-                                  onKeyDown={(event) => this.handleAccordionToggle(event, '2')}
+                                  onKeyDown={(event: any) => this.handleAccordionToggle(event, '2')}
                                   id="accordion-toggle-2"
                                   role="button"
                                   aria-expanded={this.state.isExpanded}
@@ -708,7 +708,7 @@ export default class ChampionsCards extends Component<ChampionsCardsProps, Champ
                                               </td>
                                               <td className="gttc-tap-data">
                                                 {
-                                                  rankedMember.EventPoints[e].map((x) => x.Count / x.Count).length
+                                                  rankedMember.EventPoints[e].map((x: any) => x.Count / x.Count).length
                                                 }
                                               </td>
                                             </tr>

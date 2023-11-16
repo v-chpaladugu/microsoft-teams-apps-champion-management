@@ -1,3 +1,5 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
 :global {
 
     .totReportComboBoxCallout {
@@ -123,7 +125,7 @@
     }
 
     .dDInfoIconArea {
-        margin-top: 5px;
+        margin-top: 10px;
 
         .dDInfoIcon {
             font-size: 20px;
@@ -470,7 +472,7 @@
 
         .dDInfoIconArea {
             grid-area: 1 / 2;
-            margin-top: 0;
+            margin-top: 7px;
 
             .dDInfoIcon {
                 font-size: 18px;

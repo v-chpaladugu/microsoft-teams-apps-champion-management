@@ -143,7 +143,7 @@ class ClbAddMember extends React.Component<IClbAddMemberProps, IState> {
         SPHttpClient.configurations.v1
       )
       .then((response: SPHttpClientResponse) => {
-        response.json().then((regions) => {
+        response.json().then((regions: any) => {
           if (!regions.error) {
             this.props.context.spHttpClient
               .get(
@@ -153,7 +153,7 @@ class ClbAddMember extends React.Component<IClbAddMemberProps, IState> {
               )
               // tslint:disable-next-line: no-shadowed-variable
               .then((response: SPHttpClientResponse) => {
-                response.json().then((countries) => {
+                response.json().then((countries: any) => {
                   if (!countries.error) {
                     this.setState({
                       regions: regions.Choices,
@@ -173,7 +173,7 @@ class ClbAddMember extends React.Component<IClbAddMemberProps, IState> {
         SPHttpClient.configurations.v1
       )
       .then((response: SPHttpClientResponse) => {
-        response.json().then((groups) => {
+        response.json().then((groups: any) => {
           if (!groups.error) {
             this.props.context.spHttpClient
               .get(
@@ -183,7 +183,7 @@ class ClbAddMember extends React.Component<IClbAddMemberProps, IState> {
               )
               // tslint:disable-next-line: no-shadowed-variable
               .then((response: SPHttpClientResponse) => {
-                response.json().then((focusAreas) => {
+                response.json().then((focusAreas: any) => {
                   if (!focusAreas.error) {
                     this.setState({
                       groups: groups.Choices,
@@ -408,7 +408,7 @@ class ClbAddMember extends React.Component<IClbAddMemberProps, IState> {
                 SPHttpClient.configurations.v1
               )
               .then((responsen: SPHttpClientResponse) => {
-                responsen.json().then((datada) => {
+                responsen.json().then((datada: any) => {
                   let memberDataId = datada.value.find(
                     (d: { Title: string }) =>
                       d.Title.toLowerCase() === datauser.Email.toLowerCase()
@@ -428,10 +428,10 @@ class ClbAddMember extends React.Component<IClbAddMemberProps, IState> {
                       )
                       .then((responseData: SPHttpClientResponse) => {
                         if (responseData.status === 200) {
-                          responseData.json().then(async (data) => {
+                          responseData.json().then(async (data: any) => {
                             // tslint:disable-next-line: no-function-expression
                             var member: any = [];
-                            data.value.forEach(element => {
+                            data.value.forEach((element: any) => {
                               if (element.Email.toLowerCase() === email.toLowerCase())
                                 member.push(element);
                             });
@@ -555,7 +555,7 @@ class ClbAddMember extends React.Component<IClbAddMemberProps, IState> {
     } //When an option unselected from the dropdown other than "All"
     else {
       this.setState({
-        multiSelectChoices: this.state.multiSelectChoices.filter((key) => key !== item.key && key !== stringsConstants.AllLabel)
+        multiSelectChoices: this.state.multiSelectChoices.filter((key: any) => key !== item.key && key !== stringsConstants.AllLabel)
       });
     }
   }

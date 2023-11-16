@@ -12,7 +12,7 @@ import {
   teamsLightTheme, teamsDarkTheme, teamsHighContrastTheme,
   FluentProvider, Theme
 } from '@fluentui/react-components';
-import * as microsoftTeams from "@microsoft/teams-js";
+import { app } from "@microsoft/teams-js-v2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as LocaleStrings from 'ClbHomeWebPartStrings';
 import * as React from "react";
@@ -146,25 +146,25 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
             //get appTitle from Config List
             this.getConfigData();
           });
-          var props = {};
-          datauser.UserProfileProperties.forEach((prop) => {
+          let props: any = {};
+          datauser.UserProfileProperties.forEach((prop: any) => {
             props[prop.Key] = prop.Value;
           });
           datauser.userProperties = props;
           this.setState({ firstName: datauser.userProperties.FirstName });
         });
-      }).catch((error) => {
+      }).catch((error: any) => {
         alert(stringsConstants.CMPErrorMessage + "while retrieving user details. Below is the " + JSON.stringify(error));
         console.error("CMP_CLBHome_componentDidMount_FailedToGetUserDetails \n", JSON.stringify(error));
       });
 
     //Get current Teams theme to pass into fluent provider
-    microsoftTeams.initialize();
-    microsoftTeams.getContext(ctx => {
+    app.initialize();
+    app.getContext().then((ctx: any) => {
       const theme = ctx.theme || stringsConstants.themeDefaultMode;
       this.updateCMPTheme(theme);
     });
-    microsoftTeams.registerOnThemeChangeHandler((theme: string) => {
+    app.registerOnThemeChangeHandler((theme: string) => {
       this.updateCMPTheme(theme);
     });
 
@@ -192,11 +192,11 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
       let listsPresent = [];
       let allTOTLists = [];
       let fieldsMisMatchCount = 0;
-      await listStructure.forEach(async (element) => {
+      await listStructure.forEach(async (element: any) => {
         const spListTitle: string = element["listName"];
         const fieldsToCreate: string[] = element["fields"];
         allTOTLists.push(spListTitle);
-        await spweb.lists.getByTitle(spListTitle).get().then(async (list) => {
+        await spweb.lists.getByTitle(spListTitle).get().then(async (list: any) => {
           if (list != undefined) {
             listsPresent.push(spListTitle);
             //validate for fields
@@ -238,7 +238,7 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
         const parser = new DOMParser();
         const xml = parser.parseFromString(fieldsToCreate[i], 'text/xml');
         let fieldNameToCheck = xml.querySelector('Field').getAttribute('DisplayName');
-        let fieldExists = filterFields.filter(e => e.Title == fieldNameToCheck);
+        let fieldExists = filterFields.filter((e: any) => e.Title == fieldNameToCheck);
         if (fieldExists.length == 0) {
           totalFieldsToCreate.push(fieldsToCreate[i]);
         }
@@ -279,7 +279,7 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
                         SPHttpClient.configurations.v1
                       )
                       .then((response: SPHttpClientResponse) => {
-                        response.json().then((datada) => {
+                        response.json().then((datada: any) => {
                           if (!datada.error) {
                             let val = datada.value;
                             if (val.length === 0 && item.displayName === stringsConstants.MemberList) {
@@ -438,7 +438,7 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
                       console.log(stringsConstants.CMPLog + "Creating Lists in new site");
                       //Create 3 lists in the newly created site
                       if (exSiteId) {
-                        let lists = [];
+                        let lists: any = [];
                         siteconfig.lists.forEach((spList) => {
                           let list = {
                             displayName: spList.listName,
@@ -447,7 +447,7 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
                           lists.push(list);
                         });
                         commonService = new CommonServices(this.props.context, this.props.siteUrl);
-                        lists.forEach((spList) => {
+                        lists.forEach((spList: any) => {
                           this.createNewList(spList);
                         });
                       }
@@ -455,7 +455,7 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
                   });
                 }
 
-              }).catch((error) => {
+              }).catch((error: any) => {
                 alert(stringsConstants.CMPErrorMessage + "while creating new site. Below are the details: \n" + JSON.stringify(error));
                 console.error("CMP_CLBHome_createSiteAndLists_FailedToCreateSite \n", JSON.stringify(error));
               });
@@ -490,7 +490,7 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
                           if (exSiteId) {
                             console.log(stringsConstants.CMPLog + "Creating lists");
                             //Set up List Creation Information
-                            let lists = [];
+                            let lists: any = [];
                             siteconfig.lists.forEach((spList) => {
                               let list = {
                                 displayName: spList.listName,
@@ -500,13 +500,13 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
                             });
                             commonService = new CommonServices(this.props.context, this.props.siteUrl);
                             //Iterate and create all the lists
-                            lists.forEach((spList) => {
+                            lists.forEach((spList: any) => {
                               this.createNewList(spList);
                             });
                           }
                         });
                       }
-                    }).catch((error) => {
+                    }).catch((error: any) => {
                       alert(stringsConstants.CMPErrorMessage + "while retrieving SiteID. Below are the details: \n" + JSON.stringify(error));
                       console.error("CMP_CLBHome_createSiteAndLists_FailedToGetSiteID \n", JSON.stringify(error));
                     });
@@ -523,25 +523,25 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
                   const eventTrackDetailsColumns = await spweb.lists.getByTitle(stringsConstants.EventTrackDetailsList).fields.filter("Hidden eq false and ReadOnlyField eq false").select("Title").get();
 
                   //Check if Notes column exists, if not create it.
-                  let notesFieldExists = eventTrackDetailsColumns.filter(e => e.Title == stringsConstants.NotesColumn);
+                  let notesFieldExists = eventTrackDetailsColumns.filter((e: any) => e.Title == stringsConstants.NotesColumn);
                   if (notesFieldExists.length == 0) {
                     await spweb.lists.getByTitle(stringsConstants.EventTrackDetailsList).fields.addMultilineText(stringsConstants.NotesColumn, 6, false, false, false, false).then(async () => {
                       await spweb.lists.getByTitle(stringsConstants.EventTrackDetailsList).defaultView.fields.add(stringsConstants.NotesColumn).then(() => {
                         console.log("CMP_CLBHome_Added Notes column to Event Track Details List");
                       });
-                    }).catch((error) => {
+                    }).catch((error: any) => {
                       console.error("CMP_CLBHome_Failed to add Notes Column to Event Track Details List \n", JSON.stringify(error));
                     });
                   }
 
                   //Check if Status column exists, if not create it.
-                  let statusFieldExists = eventTrackDetailsColumns.filter(e => e.Title == stringsConstants.StatusColumn);
+                  let statusFieldExists = eventTrackDetailsColumns.filter((e: any) => e.Title == stringsConstants.StatusColumn);
                   if (statusFieldExists.length == 0) {
                     await spweb.lists.getByTitle(stringsConstants.EventTrackDetailsList).fields.addText(stringsConstants.StatusColumn, 255).then(async () => {
                       await spweb.lists.getByTitle(stringsConstants.EventTrackDetailsList).defaultView.fields.add(stringsConstants.StatusColumn).then(() => {
                         console.log("CMP_CLBHome_Added Status column to Event Track Details List");
                       });
-                    }).catch((error) => {
+                    }).catch((error: any) => {
                       console.error("CMP_CLBHome_Failed to add Status Column to Event Track Details List \n", JSON.stringify(error));
                     });
                   }
@@ -595,7 +595,7 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
                     });
 
                 }
-              }).catch((error) => {
+              }).catch((error: any) => {
                 alert(stringsConstants.CMPErrorMessage + "while checking if MemberList exists. Below are the details: \n" + JSON.stringify(error));
                 console.error("CMP_CLBHome_createSiteAndLists_FailedToCheckMemberListExists \n", JSON.stringify(error));
               });
@@ -698,8 +698,8 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
               });
               fetch(require('../assets/images/CMPBadge.png')).then(res => res.blob()).then((blob) => {
                 spweb.getFolderByServerRelativeUrl("/" + this.state.inclusionpath + "/" + this.state.sitename + "/" + spListTitle).files.add("digitalbadge.png", blob, true)
-                  .then((res) => {
-                    res.file.getItem().then(item => {
+                  .then((res: any) => {
+                    res.file.getItem().then((item: any) => {
                       item.update({
                         Title: "Teamwork Champion"
                       });
@@ -741,10 +741,10 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
                 isShow: false,
               });
             }
-            response.json().then((datada) => {
+            response.json().then((datada: any) => {
               if (!datada.error) {
                 let dataexists: any = datada.value.find(
-                  (x) =>
+                  (x: any) =>
                     x.Title.toLowerCase() === this.state.loggedinUserEmail.toLowerCase()
                 );
                 if (dataexists) {
@@ -766,7 +766,7 @@ export default class ClbHome extends React.Component<IClbHomeProps, IClbHomeStat
                   this.setState({ eV: true });
               }
             });
-          }).catch((error) => {
+          }).catch((error: any) => {
             alert(stringsConstants.CMPErrorMessage + "while retrieving user role. Below are the details: \n" + JSON.stringify(error));
             console.error("CMP_CLBHome_checkUserRole_FailedtoGetUserRole \n", JSON.stringify(error));
           });

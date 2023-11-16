@@ -121,7 +121,7 @@ export default class TOTEnableTournament extends React.Component<IEnableTourname
           filterActive
         );
 
-      let activeTournamentsChoices = [];
+      let activeTournamentsChoices: any = [];
       if (activeTournamentsArray.length > 0) {
         //Loop through all "Active" tournaments and create an array with key and text
         activeTournamentsArray.forEach((eachTournament) => {
@@ -167,7 +167,7 @@ export default class TOTEnableTournament extends React.Component<IEnableTourname
           stringsConstants.TournamentsMasterList,
           selectFilter
         );
-      let tournamentsChoices = [];
+      let tournamentsChoices: any = [];
       if (allTournamentsArray.length > 0) {
         //Loop through all "Not Started" tournaments and create an array with key and text
         allTournamentsArray.forEach((eachTournament) => {

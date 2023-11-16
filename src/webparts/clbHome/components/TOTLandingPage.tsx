@@ -336,9 +336,9 @@ class TOTLandingPage extends React.Component<
           if (digitalLib != undefined) {
             digitalLib.fields.getByInternalNameOrTitle("Tournament").get()
               .then(() => {
-                let imageContext;
-                listStructure.forEach(async (element) => {
-                  const masterDataDetails: string[] = element["masterData"];
+                let imageContext: any;
+                listStructure.forEach(async (element: any) => {
+                  const masterDataDetails: any = element["masterData"];
                   for (let k = 0; k < masterDataDetails.length; k++) {
                     //check file exists before adding
                     let fileExists = await sp.web.getFileByServerRelativeUrl("/" + this.state.inclusionpath + "/"
@@ -365,7 +365,7 @@ class TOTLandingPage extends React.Component<
                           break;
                       }
                       //upload default badges
-                      imageContext.then(res => res.blob()).then((blob) => {
+                      imageContext.then((res: any) => res.blob()).then((blob: any) => {
                         sp.web.getFolderByServerRelativeUrl("/" + this.state.inclusionpath + "/"
                           + this.state.siteName + "/" + stringsConstants.DigitalBadgeLibrary).files.add(masterDataDetails[k]['Name'], blob, true)
                           .then((res) => {
@@ -383,9 +383,9 @@ class TOTLandingPage extends React.Component<
               }).catch(async () => {
                 //field doesn't exists, hence create it
                 await digitalLib.fields.addLookup("Tournament", resp.Id, "Title").then(() => {
-                  let imageContext;
-                  listStructure.forEach(async (element) => {
-                    const masterDataDetails: string[] = element["masterData"];
+                  let imageContext: any;
+                  listStructure.forEach(async (element: any) => {
+                    const masterDataDetails: any = element["masterData"];
                     for (let k = 0; k < masterDataDetails.length; k++) {
                       //unable to resolve the dynamic path from siteconfig, hence the switch case
                       switch (masterDataDetails[k]['Title']) {
@@ -406,7 +406,7 @@ class TOTLandingPage extends React.Component<
                           break;
                       }
                       //upload default badges
-                      imageContext.then(res => res.blob()).then((blob) => {
+                      imageContext.then((res: any) => res.blob()).then((blob: any) => {
                         sp.web.getFolderByServerRelativeUrl("/" + this.state.inclusionpath + "/"
                           + this.state.siteName + "/" + stringsConstants.DigitalBadgeLibrary).files.add(masterDataDetails[k]['Name'], blob, true)
                           .then((res) => {
@@ -445,13 +445,13 @@ class TOTLandingPage extends React.Component<
   private async provisionTOTListsAndFields(): Promise<any> {
     return new Promise<any>(async (resolve, reject) => {
       try {
-        const listPromise = [];
+        const listPromise: any = [];
         //get all lists schema from siteconfig
         const listStructure: any = siteconfig.totLists;
 
         for (let element = 0; element < listStructure.length; element++) {
           const spListTitle: string = listStructure[element]["listName"];
-          const spListTemplate = listStructure[element]["listTemplate"];
+          const spListTemplate: any = listStructure[element]["listTemplate"];
           const fieldsToCreate: string[] = listStructure[element]["fields"];
           const masterDataToAdd: string[] = listStructure[element]["masterData"];
           //Ensure list exists, creates if not found and add fields/data if already created

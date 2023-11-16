@@ -1,3 +1,5 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
 div[class~="totLbComboCallout"] {
   div[class~="ms-Callout-main"] {
     background-color: #FFFFFF;
@@ -652,6 +654,7 @@ div[class~="totLbComboCallout--contrast"] {
     }
   }
 }
+
 mgt-person[class="participant-person-card"] {
   --person-line1-text-color: var(--colorNeutralForeground1) !important;
   --person-line1-text-line-height: 24px;

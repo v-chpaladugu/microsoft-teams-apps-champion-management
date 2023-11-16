@@ -214,8 +214,8 @@ export default class RecordEvents extends Component<RecordEventsProps, RecordEve
 
   //Method for dropdown options
   public options() {
-    let optionArray = [];
-    let optionArrayIds = [];
+    let optionArray: any = [];
+    let optionArrayIds: any = [];
     if (this.state.edetails.length == 0)
       this.props.context.spHttpClient
         .get(
@@ -365,7 +365,7 @@ export default class RecordEvents extends Component<RecordEventsProps, RecordEve
                 SPHttpClient.configurations.v1
               )
               .then((response: SPHttpClientResponse) => {
-                response.json().then((datada) => {
+                response.json().then((datada: any) => {
                   let memberDataIds = datada.value.find(
                     (d: { Title: string }) =>
                       d.Title.toLowerCase() === datauser.Email.toLowerCase()
@@ -426,7 +426,7 @@ export default class RecordEvents extends Component<RecordEventsProps, RecordEve
       return <span></span>;
     };
 
-    const eventsTableHeader = [
+    const eventsTableHeader: any = [
       {
         dataField: "id",
         headerAttrs: { hidden: true },

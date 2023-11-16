@@ -112,9 +112,9 @@ export default class TOTMyDashboard extends React.Component<ITOTMyDashboardProps
       let activeTournamentDetails: any[] =
         await commonServiceManager.getActiveTournamentDetails();
 
-      let activeTournamentsChoices = [];
-      let myTournamentsChoices = [];
-      let tournamentDescriptionChoices = [];
+      let activeTournamentsChoices: any = [];
+      let myTournamentsChoices: any = [];
+      let tournamentDescriptionChoices: any = [];
       //If active tournament found
       if (activeTournamentDetails.length > 0) {
 
@@ -156,8 +156,8 @@ export default class TOTMyDashboard extends React.Component<ITOTMyDashboardProps
             text: eachTournament["Description"]
           });
         });
-        activeTournamentsChoices.sort((a, b) => a.text.localeCompare(b.text));
-        myTournamentsChoices.sort((a, b) => a.text.localeCompare(b.text));
+        activeTournamentsChoices.sort((a: any, b: any) => a.text.localeCompare(b.text));
+        myTournamentsChoices.sort((a: any, b: any) => a.text.localeCompare(b.text));
 
         //Set state variables for dropdown options
         this.setState({
@@ -288,7 +288,7 @@ export default class TOTMyDashboard extends React.Component<ITOTMyDashboardProps
   }
 
   //On select of a tree node change the state of selected actions
-  private onActionSelected(items: ITreeItem[]) {
+  private onActionSelected(items: any) {
     this.setState({ selectedActionsList: items, treeViewSelectedKeys: items["key"] });
   }
 
@@ -527,8 +527,8 @@ export default class TOTMyDashboard extends React.Component<ITOTMyDashboardProps
       if (this.state.selectedActionsList.length > 0) {
         let selectedTreeArray: ITreeItem[] = this.state.selectedActionsList;
         //Loop through actions selected and create a list item for each treeview selection
-        let createActionsPromise = [];
-        let checkActionsPromise = [];
+        let createActionsPromise: any = [];
+        let checkActionsPromise: any = [];
         for (let item of selectedTreeArray) {
           //Skip parent node for treeview which is not an action
           if (item.data != undefined) {

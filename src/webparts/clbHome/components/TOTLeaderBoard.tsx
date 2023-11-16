@@ -109,9 +109,9 @@ export default class TOTLeaderBoard extends React.Component<ITOTLeaderBoardProps
       let activeTournamentDetails: any[] =
         await commonService.getActiveTournamentDetails();
 
-      let activeTournamentsChoices = [];
-      let myTournamentsChoices = [];
-      let tournamentDescriptionChoices = [];
+      let activeTournamentsChoices: any = [];
+      let myTournamentsChoices: any = [];
+      let tournamentDescriptionChoices: any = [];
       //If active tournament found
       if (activeTournamentDetails.length > 0) {
 
@@ -153,8 +153,8 @@ export default class TOTLeaderBoard extends React.Component<ITOTLeaderBoardProps
             text: eachTournament["Description"]
           });
         });
-        activeTournamentsChoices.sort((a, b) => a.text.localeCompare(b.text));
-        myTournamentsChoices.sort((a, b) => a.text.localeCompare(b.text));
+        activeTournamentsChoices.sort((a: any, b: any) => a.text.localeCompare(b.text));
+        myTournamentsChoices.sort((a: any, b: any) => a.text.localeCompare(b.text));
 
         //Set state variables for dropdown options
         this.setState({
@@ -491,16 +491,16 @@ export default class TOTLeaderBoard extends React.Component<ITOTLeaderBoardProps
     }
   }
 
-    // format the cell for participant Name
-    participantFormatter = (cell: any, gridRow: any, rowIndex: any, formatExtraData: any) => {
-      return (
-          <Person
-              personQuery={cell}
-              view={3}
-              personCardInteraction={1}
-              className="particpant-person-card"
-          />
-      );
+  // format the cell for participant Name
+  participantFormatter = (cell: any) => {
+    return (
+      <Person
+        personQuery={cell}
+        view={3}
+        personCardInteraction={1}
+        className="particpant-person-card"
+      />
+    );
   }
 
   public render(): React.ReactElement<ITOTLeaderBoardProps> {

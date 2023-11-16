@@ -856,7 +856,7 @@ export default class DigitalBadge extends React.Component<IDigitalBadgeProps, ID
               .api("me/photo/$value")
               .version("v1.0")
               .header("Content-Type", "image/jpeg")
-              .put(blob, (errDb, _res) => {
+              .put(blob, (errDb: any, _res: any) => {
                 if (!errDb) {
                   resolve(_res);
                 }
@@ -887,10 +887,10 @@ export default class DigitalBadge extends React.Component<IDigitalBadgeProps, ID
               .version("v1.0")
               .headers({ "Content-Type": "blob", responseType: "blob" })
               .get()
-              .then((data) => {
+              .then((data: any) => {
                 resolve(data);
               })
-              .catch((errDb) => {
+              .catch((errDb: any) => {
                 reject(errDb);
               });
           });
@@ -910,7 +910,7 @@ export default class DigitalBadge extends React.Component<IDigitalBadgeProps, ID
               .version("v1.0")
               .headers({ "Content-Type": "blob", responseType: "blob" })
               .get()
-              .then((data) => {
+              .then((data: any) => {
                 resolve(data);
               });
           });

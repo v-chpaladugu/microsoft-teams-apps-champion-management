@@ -244,7 +244,7 @@ export default class ManageConfigSettings extends React.Component
     //Tooltip for info Icon
     private iconWithTooltip(iconName: string, tooltipContent: string, className: string) {
         return (
-            <span className={styles[className]}>
+            <span className={(styles as any)[className]}>
                 <TooltipHost
                     content={tooltipContent}
                     calloutProps={{ gapSpace: 0 }}
@@ -341,7 +341,7 @@ export default class ManageConfigSettings extends React.Component
                                             <Toggle
                                                 checked={setting.Value === stringsConstants.EnabledStatus}
                                                 label={
-                                                  <div className={styles.toggleBtnLabel + " " + styles.subLabel} aria-label={`${LocaleStrings.ShowHideToggle} ${column.Title} ${LocaleStrings.ToggleView}`}>
+                                                    <div className={styles.toggleBtnLabel + " " + styles.subLabel} aria-label={`${LocaleStrings.ShowHideToggle} ${column.Title} ${LocaleStrings.ToggleView}`}>
                                                         {column.Title}
                                                     </div>
                                                 }

@@ -403,7 +403,7 @@ export default class TOTReport extends React.Component<ITOTReportProps, ITOTRepo
 
 
     //Load Top Participants based on points
-    private async loadTopParticipants(): Promise<Chart.ChartData> {
+    private async loadTopParticipants() {
         try {
 
             let arrLabels: string[] = [];
@@ -429,11 +429,11 @@ export default class TOTReport extends React.Component<ITOTReportProps, ITOTRepo
                     }
                 }
                 //Group the items by participants
-                let organizedParticipants = commonServiceManager.groupBy(allParticipantsArray, item => item.User_x0020_Name);
+                let organizedParticipants = commonServiceManager.groupBy(allParticipantsArray, (item: any) => item.User_x0020_Name);
 
                 //Sum up the points for each participant
                 organizedParticipants.forEach((participant) => {
-                    let pointsCompleted: number = participant.reduce((previousValue, currentValue) => { return previousValue + currentValue["Points"]; }, 0);
+                    let pointsCompleted: number = participant.reduce((previousValue: any, currentValue: any) => { return previousValue + currentValue["Points"]; }, 0);
 
                     //Push the metrics of each participant into an array.
                     topParticipantsArray.push({
@@ -443,7 +443,7 @@ export default class TOTReport extends React.Component<ITOTReportProps, ITOTRepo
                 });
 
                 //Sort by points and then by user name 
-                topParticipantsArray.sort((a, b) => {
+                topParticipantsArray.sort((a: any, b: any) => {
                     if (a.Points < b.Points) return 1;
                     if (a.Points > b.Points) return -1;
                     if (a.Title > b.Title) return 1;
@@ -451,11 +451,11 @@ export default class TOTReport extends React.Component<ITOTReportProps, ITOTRepo
                 });
 
                 //Get Top 5 participants and add it to Top Participants List
-                let top5ParticipantsArray = topParticipantsArray.filter((item, idx) => idx < 5).map(item => { return item; });
+                let top5ParticipantsArray = topParticipantsArray.filter((item: any, idx: number) => idx < 5).map((item: any) => { return item; });
 
                 if (top5ParticipantsArray.length > 0) {
                     //Loop through top tournaments and add the lables and data for the chart display
-                    top5ParticipantsArray.forEach(element => {
+                    top5ParticipantsArray.forEach((element: any) => {
                         arrLabels.push(element.Title);
                         arrData.push(element.Points);
                     });
@@ -507,7 +507,7 @@ export default class TOTReport extends React.Component<ITOTReportProps, ITOTRepo
     }
 
     //Load Top tournaments based on number of participants   
-    private async loadTopTournaments(): Promise<Chart.ChartData> {
+    private async loadTopTournaments() {
         try {
             let arrLabels: string[] = [];
             let arrData: number[] = [];
@@ -550,7 +550,7 @@ export default class TOTReport extends React.Component<ITOTReportProps, ITOTRepo
     }
 
     //Load particpants status chart based on selected tournament
-    private async loadParticipantsStatus(): Promise<Chart.ChartData> {
+    private async loadParticipantsStatus() {
         try {
 
             let arrLabels: string[] = [stringsConstants.CompletedChartLabel, stringsConstants.NotCompletedChartLabel];
@@ -654,7 +654,7 @@ export default class TOTReport extends React.Component<ITOTReportProps, ITOTRepo
     };
 
     //Options for doughnut chart
-    private doughNutChartOptions = {
+    private doughNutChartOptions: any = {
         legend: {
             display: true,
             position: "bottom"

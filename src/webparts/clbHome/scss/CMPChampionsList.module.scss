@@ -1,3 +1,5 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
 .championListContainer {
   padding-bottom: 5em;
 
@@ -123,6 +125,7 @@
       }
     }
   }
+
   mgt-person[class="champion-person-card"] {
     --person-line1-text-color: var(--colorNeutralForeground1) !important;
     --person-line1-text-line-height: 24px;

@@ -90,15 +90,15 @@ export default class ChampionsActivities extends Component<ChampionsActivitiesPr
             const pendingEvents: any[] = await this.commonServiceManager.getItemsSortedWithFilter(stringConstants.EventTrackDetailsList, pendingEventsFilterQuery, sortColumn);
 
             //Getting member ids from event track details list
-            const memberIds = [];
+            const memberIds: any = [];
             pendingEvents.forEach((event: any) => memberIds.push(event.MemberId));
 
             //Filtering member ids from duplicate member ids
-            const filteredMemberIds = memberIds.filter((item, index) => memberIds.indexOf(item) === index);
+            const filteredMemberIds = memberIds.filter((item: any, index: number) => memberIds.indexOf(item) === index);
 
             //Creating a filter query to fetch data from member list
             let memberIdFilterQuery = "";
-            filteredMemberIds.forEach((id, idx) => {
+            filteredMemberIds.forEach((id: any, idx: number) => {
                 memberIdFilterQuery = idx === 0 ? "ID eq " + id : memberIdFilterQuery + " or ID eq " + id;
             });
             //Getting data from member list
@@ -198,7 +198,7 @@ export default class ChampionsActivities extends Component<ChampionsActivitiesPr
         //When "Select All" is checked
         if (selectAll && isChecked) {
             this.setState({ isAllSelected: true });
-            let selectedEvents = [];
+            let selectedEvents: any = [];
             this.state.filteredChampionPendingEvents.forEach((event: IChampionPendingEvent) => {
                 selectedEvents.push(event.EventActivityId);
             });
@@ -296,7 +296,7 @@ export default class ChampionsActivities extends Component<ChampionsActivitiesPr
 
     public render() {
 
-        const eventsTableHeader = [
+        const eventsTableHeader: any = [
             {
                 dataField: "EventActivityId",
                 headerFormatter: () => {

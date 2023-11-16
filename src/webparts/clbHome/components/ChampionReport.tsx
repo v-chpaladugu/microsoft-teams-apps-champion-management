@@ -206,11 +206,11 @@ export default class ChampionReport extends React.Component<IChampionReportProps
 
             if (allChampionEventsArray.length > 0) {
                 for (let i = 0; i < this.state.membersList.length; i++) {
-                    filteredChampionEvents = allChampionEventsArray.filter(user => user.MemberId === this.state.membersList[i].ID);
+                    filteredChampionEvents = allChampionEventsArray.filter((user: any) => user.MemberId === this.state.membersList[i].ID);
 
                     if (filteredChampionEvents.length > 0) {
                         //Sum up the points for each champion                      
-                        let pointsCompleted: number = filteredChampionEvents.reduce((previousValue, currentValue) => { return previousValue + currentValue["Count"]; }, 0);
+                        let pointsCompleted: number = filteredChampionEvents.reduce((previousValue: any, currentValue: any) => { return previousValue + currentValue["Count"]; }, 0);
 
                         //Push the metrics of each champion into an array.
                         championRankArray.push({
@@ -229,7 +229,7 @@ export default class ChampionReport extends React.Component<IChampionReportProps
                     }
                 }
                 //Sort by points and then by Champion First Name
-                championRankArray.sort((a, b) => {
+                championRankArray.sort((a: any, b: any) => {
                     if (a.Points < b.Points) return 1;
                     if (a.Points > b.Points) return -1;
                     if (a.Champion > b.Champion) return 1;
@@ -263,14 +263,14 @@ export default class ChampionReport extends React.Component<IChampionReportProps
 
             if (selectedChampion !== stringsConstants.AllLabel && selectedChampion !== "") {
                 if (this.state.filteredAllEvents.length > 0) {
-                    let championData = this.state.filteredAllEvents.filter((item) => item.MemberId === selectedChampion);
+                    let championData = this.state.filteredAllEvents.filter((item: any) => item.MemberId === selectedChampion);
                     if (championData.length > 0) {
                         let totalEventPoints = championData.reduce(
-                            (previousValue, currentValue) => { return previousValue + currentValue[stringsConstants.CountColumn]; }, 0);
+                            (previousValue: any, currentValue: any) => { return previousValue + currentValue[stringsConstants.CountColumn]; }, 0);
                         let totalActivities = championData.length;
                         let index: number;
-                        if (this.state.championsRank.findIndex((item) => item.MemberId === selectedChampion) !== -1) {
-                            index = this.state.championsRank.findIndex((item) => item.MemberId === selectedChampion)
+                        if (this.state.championsRank.findIndex((item: any) => item.MemberId === selectedChampion) !== -1) {
+                            index = this.state.championsRank.findIndex((item: any) => item.MemberId === selectedChampion)
                         }
                         this.setState({
                             totalActivities: totalActivities,
@@ -281,8 +281,8 @@ export default class ChampionReport extends React.Component<IChampionReportProps
                     }
                     else {
                         let index: number;
-                        if (this.state.championsRank.findIndex((item) => item.MemberId === selectedChampion) !== -1) {
-                            index = this.state.championsRank.findIndex((item) => item.MemberId === selectedChampion)
+                        if (this.state.championsRank.findIndex((item: any) => item.MemberId === selectedChampion) !== -1) {
+                            index = this.state.championsRank.findIndex((item: any) => item.MemberId === selectedChampion)
                         }
                         this.setState({
                             totalActivities: 0,
@@ -294,7 +294,7 @@ export default class ChampionReport extends React.Component<IChampionReportProps
                 }
 
                 //filter the selected champion from members list array
-                let selectedMemberDetails = this.state.membersList.filter((item) => item.ID === selectedChampion);
+                let selectedMemberDetails = this.state.membersList.filter((item: any) => item.ID === selectedChampion);
 
                 this.setState({
                     selectedMemberDetails: selectedMemberDetails
@@ -305,7 +305,7 @@ export default class ChampionReport extends React.Component<IChampionReportProps
                 if (this.state.filteredAllEvents.length > 0) {
                     //Calculating metrics for all champions
                     let totalEventPoints = this.state.filteredAllEvents.reduce(
-                        (previousValue, currentValue) => { return previousValue + currentValue[stringsConstants.CountColumn]; }, 0);
+                        (previousValue: any, currentValue: any) => { return previousValue + currentValue[stringsConstants.CountColumn]; }, 0);
                     let totalActivities = this.state.filteredAllEvents.length;
 
                     this.setState({
@@ -329,7 +329,7 @@ export default class ChampionReport extends React.Component<IChampionReportProps
             });
             if (selectedChampion === stringsConstants.AllLabel) {
                 if (this.state.filteredAllEvents.length > 0) {
-                    let organizedEvents = commonServiceManager.groupBy(this.state.filteredAllEvents, item => item.EventName);
+                    let organizedEvents = commonServiceManager.groupBy(this.state.filteredAllEvents, (item: any) => item.EventName);
                     let topEventsArray: any[] = [];
                     // count the number of events for each event type
                     organizedEvents.forEach((event) => {
@@ -354,10 +354,10 @@ export default class ChampionReport extends React.Component<IChampionReportProps
                 }
             } else {
                 if (this.state.filteredAllEvents.length > 0) {
-                    let championEvents = this.state.filteredAllEvents.filter((item) => item.MemberId === selectedChampion);
+                    let championEvents = this.state.filteredAllEvents.filter((item: any) => item.MemberId === selectedChampion);
                     if (championEvents.length > 0) {
                         let topEventsArray: any[] = [];
-                        let organizedEvents = commonServiceManager.groupBy(championEvents, item => item.EventName);
+                        let organizedEvents = commonServiceManager.groupBy(championEvents, (item: any) => item.EventName);
 
                         // count the number of events for each event type
                         organizedEvents.forEach((event) => {
@@ -407,19 +407,19 @@ export default class ChampionReport extends React.Component<IChampionReportProps
                 break;
 
             case stringsConstants.LastMonth:
-                filteredEvents = this.state.allChampionEvents.filter(o => moment(new Date(o.DateofEvent), 'YYYY-MM-DD').isBetween(moment().subtract(1, 'months'), moment()));
+                filteredEvents = this.state.allChampionEvents.filter((o: any) => moment(new Date(o.DateofEvent), 'YYYY-MM-DD').isBetween(moment().subtract(1, 'months'), moment()));
                 break;
 
             case stringsConstants.Last3Months:
-                filteredEvents = this.state.allChampionEvents.filter(o => moment(new Date(o.DateofEvent), 'YYYY-MM-DD').isBetween(moment().subtract(3, 'months'), moment()));
+                filteredEvents = this.state.allChampionEvents.filter((o: any) => moment(new Date(o.DateofEvent), 'YYYY-MM-DD').isBetween(moment().subtract(3, 'months'), moment()));
                 break;
 
             case stringsConstants.Last6Months:
-                filteredEvents = this.state.allChampionEvents.filter(o => moment(new Date(o.DateofEvent), 'YYYY-MM-DD').isBetween(moment().subtract(6, 'months'), moment()));
+                filteredEvents = this.state.allChampionEvents.filter((o: any) => moment(new Date(o.DateofEvent), 'YYYY-MM-DD').isBetween(moment().subtract(6, 'months'), moment()));
                 break;
 
             case stringsConstants.Last1Year:
-                filteredEvents = this.state.allChampionEvents.filter(o => moment(new Date(o.DateofEvent), 'YYYY-MM-DD').isBetween(moment().subtract(12, 'months'), moment()));
+                filteredEvents = this.state.allChampionEvents.filter((o: any) => moment(new Date(o.DateofEvent), 'YYYY-MM-DD').isBetween(moment().subtract(12, 'months'), moment()));
                 break;
 
             default:

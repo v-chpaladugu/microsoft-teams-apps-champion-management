@@ -98,7 +98,7 @@ export default class EventsChart extends Component<EventsChartProps, EventsChart
 
 
     // Get data for top 10 events
-    private async loadTopEvents(selectedChampion: string): Promise<Chart.ChartData> {
+    private async loadTopEvents(selectedChampion: string) {
         try {
             let arrLabels: string[] = [];
             let arrData: number[] = [];
@@ -109,7 +109,7 @@ export default class EventsChart extends Component<EventsChartProps, EventsChart
             });
             if (selectedChampion === stringsConstants.AllLabel) {
                 if (this.props.filteredAllEvents.length > 0) {
-                    let organizedEvents = commonServiceManager.groupBy(this.props.filteredAllEvents, item => item.EventName);
+                    let organizedEvents = commonServiceManager.groupBy(this.props.filteredAllEvents, (item: any) => item.EventName);
 
                     // count the number of events for each event type
                     organizedEvents.forEach((event) => {
@@ -144,7 +144,7 @@ export default class EventsChart extends Component<EventsChartProps, EventsChart
 
                     let championEvents = this.props.filteredAllEvents.filter((item) => item.MemberId === selectedChampion);
                     if (championEvents.length > 0) {
-                        let organizedEvents = commonServiceManager.groupBy(championEvents, item => item.EventName);
+                        let organizedEvents = commonServiceManager.groupBy(championEvents, (item: any) => item.EventName);
 
                         //count the number of events for each event type
                         organizedEvents.forEach((event) => {

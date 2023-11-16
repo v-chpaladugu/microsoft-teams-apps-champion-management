@@ -1,5 +1,5 @@
 import * as LocaleStrings from 'ClbHomeWebPartStrings';
-import * as microsoftTeams from '@microsoft/teams-js';
+import { app } from '@microsoft/teams-js-v2';
 import * as React from 'react';
 import * as stringsConstants from '../constants/strings';
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -45,7 +45,7 @@ export default class ChampionEvents extends Component<ChampionEventsProps, Champ
 
     //Initializes the teams library and calling the methods to load the initial data  
     public _renderListAsync() {
-        microsoftTeams.initialize();
+        app.initialize();
     }
 
     //method to load the selected member activities
@@ -63,8 +63,8 @@ export default class ChampionEvents extends Component<ChampionEventsProps, Champ
 
     //Method to execute the deep link API in teams
     public openTask = (selectedTask: string) => {
-        microsoftTeams.initialize();
-        microsoftTeams.executeDeepLink(selectedTask);
+        app.initialize();
+        app.openLink(selectedTask);
     }
 
     //Default image to show in case of any error in loading user profile image
@@ -282,7 +282,7 @@ export default class ChampionEvents extends Component<ChampionEventsProps, Champ
         const isSidebar = this.props.parentComponent === stringsConstants.SidebarLabel;
         const isChampionReport = this.props.parentComponent === stringsConstants.ChampionReportLabel;
 
-        const activitiesTableHeader = [
+        const activitiesTableHeader: any = [
             {
                 dataField: stringsConstants.dateOfEventLabel,
                 formatter: this.eventDateFormatter,

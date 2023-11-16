@@ -443,7 +443,7 @@ export default class TOTCreateTournament extends React.Component<ICreateTourname
         sheetName = this.state.workBook.SheetNames[sheetCount];
         const workSheet = this.state.workBook.Sheets[sheetName];
         //Convert array to json
-        const sheetRows = XLSX.utils.sheet_to_json(workSheet, { header: 1, defval: null, blankrows: false });
+        const sheetRows: any = XLSX.utils.sheet_to_json(workSheet, { header: 1, defval: null, blankrows: false });
 
         let tournamentActions: any = [];
         let actionsData: any = [];
@@ -546,12 +546,12 @@ export default class TOTCreateTournament extends React.Component<ICreateTourname
                       stringsConstants.ActionsMasterList).then(async (allActionsItems) => {
                         //If Actions list is not empty
                         if (allActionsItems.length > 0) {
-                          const actionExists = allActionsItems.filter((action) =>
+                          const actionExists = allActionsItems.filter((action: any) =>
                             action.Category.trim().replaceAll(" ", "") === actionObj.category.trim().replaceAll(" ", "") &&
                             action.Title.trim().replaceAll(" ", "") === actionObj.action.trim().replaceAll(" ", ""));
 
                           if (actionExists.length == 0) {
-                            const categoryExists = allActionsItems.filter((action) =>
+                            const categoryExists = allActionsItems.filter((action: any) =>
                               action.Category.trim().replaceAll(" ", "") === actionObj.category.trim().replaceAll(" ", ""));
 
                             if (categoryExists.length > 0) {
@@ -585,7 +585,7 @@ export default class TOTCreateTournament extends React.Component<ICreateTourname
                       if (tournamentActionsItem.length > 0) {
                         //If any item exists already for the tournament in the Tournament Actions list.
                         for (let tActionObj of tournamentActions) {
-                          const tournamentActionExists = tournamentActionsItem.filter((tAction) => tAction.Title.trim() === tActionObj.name.trim() &&
+                          const tournamentActionExists = tournamentActionsItem.filter((tAction: any) => tAction.Title.trim() === tActionObj.name.trim() &&
                             tAction.Category.trim().replaceAll(" ", "") === tActionObj.category.trim().replaceAll(" ", "") &&
                             tAction.Action.trim().replaceAll(" ", "") === tActionObj.action.trim().replaceAll(" ", ""));
 

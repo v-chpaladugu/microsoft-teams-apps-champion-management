@@ -77,7 +77,7 @@ export default class TOTSideBar extends React.Component<
     }
     else {
       let filterCurrentUser = this.props.currentUserDetails.filter(
-        (e) =>
+        (e: any) =>
           e.Email === this.props.context.pageContext.user.email.toLowerCase()
       );
       if (filterCurrentUser.length > 0) {
@@ -154,7 +154,7 @@ export default class TOTSideBar extends React.Component<
             if (res.length > 0) {
               allUserActions = res;
               let filterCurrentUser = allUserActions.filter(
-                (e) =>
+                (e: any) =>
                   e.Email ===
                   this.props.context.pageContext.user.email.toLowerCase()
               );
@@ -216,7 +216,7 @@ export default class TOTSideBar extends React.Component<
       }
     });
   }
-  public addDefaultSrc(ev) {
+  public addDefaultSrc(ev: any) {
     ev.target.src = require("../assets/images/noprofile.png"); //if no profile then we are showing default image
   }
   public render() {
